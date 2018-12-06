@@ -1,12 +1,18 @@
 package com.arquitetura;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+//import org.springframework.context.annotation.Import;
+
+//import springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-public class ControlevendaApplication {
+@EnableSwagger2
+public class ControlevendaApplication  extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ControlevendaApplication.class, args);
+		new ControlevendaApplication().configure(new SpringApplicationBuilder(ControlevendaApplication.class)).run(args);
 	}
 }
