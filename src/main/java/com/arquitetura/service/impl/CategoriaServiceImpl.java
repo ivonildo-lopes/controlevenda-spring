@@ -11,6 +11,7 @@ import com.arquitetura.DTO.CategoriaDto;
 import com.arquitetura.dao.CategoriaDao;
 import com.arquitetura.error.BadValueException;
 import com.arquitetura.model.Categoria;
+import com.arquitetura.repository.CategoriaRepository;
 import com.arquitetura.service.CategoriaService;
 
 @Service(value = "categoriaService")
@@ -18,6 +19,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Autowired
 	private CategoriaDao dao;
+	
+	@Autowired
+	private CategoriaRepository repository;
 
 	public Categoria findById(Long id) {
 
@@ -65,7 +69,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 			throw new BadValueException("Não existe nenhum categoria cadastrada");
 		}
 
-		return categorias;
+		return null;
 	}
 
 	@Override
