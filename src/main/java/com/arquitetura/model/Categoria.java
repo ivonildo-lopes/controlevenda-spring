@@ -1,12 +1,17 @@
 package com.arquitetura.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -22,6 +27,10 @@ public @Data class Categoria implements Serializable {
 	
 	@Column(length=250)
 	private String nome;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categorias")
+	private List<Produto> produtos = new ArrayList<Produto>();
 		
 	public Categoria() {}
 

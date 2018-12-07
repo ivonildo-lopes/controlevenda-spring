@@ -4,11 +4,10 @@ import java.util.List;
 
 import lombok.Data;
 
-public @Data class CategoriaDto {
+public @Data class ProdutoDto {
 
 	private Long id;
-	
 	private String nome;
-	
-	private List<ProdutoDto> produtos;
+	private Double preco;
+	private List<CategoriaDto> categorias;
 }

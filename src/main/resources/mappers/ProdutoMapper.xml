@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CategoriaRepository">
+
+    <resultMap id="resultProdutoDto" type="com.arquitetura.DTO.ProdutoDto">
+        <id property="id" column="id"/>
+        <result property="nome" column="nome"/>
+        <result property="preco" column="preco"/>
+    </resultMap>
+
+    <select id="getProdutosIdCategoria" resultMap="resultProdutoDto">
+        SELECT id, nome, preco FROM produto where id =  #{idCategoria}
+    </select>
+    
+    
+</mapper>
