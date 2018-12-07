@@ -69,7 +69,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 			throw new BadValueException("Não existe nenhum categoria cadastrada");
 		}
 
-		return null;
+		return categorias;
 	}
 
 	@Override
