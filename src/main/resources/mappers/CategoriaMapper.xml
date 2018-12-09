@@ -4,14 +4,22 @@
 
 <mapper namespace="CategoriaRepository">
 
-    <resultMap id="resultCategoriaDto" type="com.arquitetura.DTO.CategoriaDto">
-        <id property="id" column="id"/>
-        <result property="nome" column="nome"/>
-    </resultMap>
+	<resultMap id="resultCategoriaDto" type="com.arquitetura.DTO.CategoriaDto">
+		<id property="id" column="id" />
+		<result property="nome" column="nome" />
+	</resultMap>
 
-    <select id="getCategorias" resultMap="resultCategoriaDto">
-        SELECT id, nome FROM categoria
-    </select>
-    
-    
+	<select id="getCategorias" resultMap="resultCategoriaDto">
+		SELECT id, nome FROM categoria
+	</select>
+
+	<select id="getCategoriasByIdCategorias" resultMap="resultCategoriaDto">
+		SELECT id, nome FROM categoria where id in
+		<foreach item="id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+
 </mapper>

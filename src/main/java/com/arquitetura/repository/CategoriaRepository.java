@@ -1,7 +1,9 @@
 package com.arquitetura.repository;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,13 @@ public class CategoriaRepository implements Serializable{
 	
 	public List<CategoriaDto> listaCategorias(){
 		return this.sqlSession.selectList("CategoriaRepository.getCategorias");
+	}
+
+
+	public List<CategoriaDto> findByIdCategorias(List ids) {
+		Map filter = new HashMap<>();
+		filter.put("ids", ids);
+		return this.sqlSession.selectList("CategoriaRepository.getCategoriasByIdCategorias",filter);
 	}
 	
 	

@@ -105,4 +105,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 		return categoriasDto;
 	}
 
+	@Override
+	public List<CategoriaDto> findByIdCategorias(List ids) {
+		return this.repository.findByIdCategorias(ids);
+	}
+
 }

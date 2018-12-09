@@ -18,4 +18,6 @@ public interface CategoriaService {
 
 	List<CategoriaDto> saveListCategoria(List<CategoriaDto> categoriaDto);
 
+	List<CategoriaDto> findByIdCategorias(List ids);
+
 }

@@ -3,14 +3,18 @@ package com.arquitetura.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.arquitetura.DTO.CategoriaDto;
 import com.arquitetura.DTO.ProdutoDto;
 import com.arquitetura.dao.ProdutoDao;
 import com.arquitetura.error.BadValueException;
+import com.arquitetura.model.Categoria;
 import com.arquitetura.model.Produto;
+import com.arquitetura.service.CategoriaService;
 import com.arquitetura.service.ProdutoService;
 
 @Service(value = "produtoService")
@@ -19,6 +23,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Autowired
 	private ProdutoDao dao;
 	
+	@Autowired
+	private CategoriaService categoriaService;
 
 	public Produto findById(Long id) {
 
@@ -45,12 +51,44 @@ public class ProdutoServiceImpl implements ProdutoService {
 		Produto produto = new Produto();
 		produto.setNome(produtoDto.getNome());
 		produto.setPreco(produtoDto.getPreco());
+		if(!Objects.isNull(produtoDto.getCategorias()) && produtoDto.getCategorias().size() > 0){
+			List ids = produtoDto.getCategorias().stream().map(c -> c.getId()).collect(Collectors.toList());
+			produto.setCategorias(this.getCategorias(this.categoriaService.findByIdCategorias(ids)));
+		}
 		
 		if(Objects.isNull(this.dao.save(produto))) {
 			throw new BadValueException("Não foi possivel adicionar uma produto");
 		}
 		
 		return this.convertModelToDto(produto);
+	}
+	
+	private List<Categoria> getCategorias(List<CategoriaDto> categoriasDto){
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		
+		categoriasDto.stream().forEach(categoriaDto -> {
+				Categoria categoria = new Categoria();
+				
+				categoria.setId(categoriaDto.getId());
+				categoria.setNome(categoriaDto.getNome());
+				
+				categorias.add(categoria);
+		});
+		
+		return categorias;
+	}
+	
+	private List<CategoriaDto> getCategoriasDto(List<Categoria> categorias){
+		List<CategoriaDto> categoriasDto = new ArrayList<CategoriaDto>();
+		
+		categorias.stream().forEach(categoria -> {
+			CategoriaDto categoriaDto = new CategoriaDto();
+			categoriaDto.setId(categoria.getId());
+			categoriaDto.setNome(categoria.getNome());
+			categoriasDto.add(categoriaDto);
+		});
+		
+		return categoriasDto;
 	}
 	
 	
@@ -60,6 +98,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoDto.setNome(produto.getNome());
 		produtoDto.setPreco(produto.getPreco());
 		
+		produtoDto.setCategorias(this.getCategoriasDto(produto.getCategorias()));
 		return produtoDto;
 	}
 
@@ -88,6 +127,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 			Produto produto = new Produto();
 			produto.setNome(produtoDto.getNome());
 			produto.setPreco(produtoDto.getPreco());
+			
+			if(!Objects.isNull(produtoDto.getCategorias()) && produtoDto.getCategorias().size() > 0){
+				List ids = produtoDto.getCategorias().stream().map(c -> c.getId()).collect(Collectors.toList());
+				produto.setCategorias(this.getCategorias(this.categoriaService.findByIdCategorias(ids)));
+			}
+		
 			produtos.add(produto);
 		});
 		
@@ -107,6 +152,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 			produtoDto.setId(produto.getId());
 			produtoDto.setNome(produto.getNome());
 			produtoDto.setPreco(produto.getPreco());
+			produtoDto.setCategorias(this.getCategoriasDto(produto.getCategorias()));
 			
 			produtosDto.add(produtoDto);
 		});
