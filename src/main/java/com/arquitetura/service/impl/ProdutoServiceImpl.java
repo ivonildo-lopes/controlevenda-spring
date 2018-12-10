@@ -8,11 +8,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.arquitetura.DTO.CategoriaDto;
 import com.arquitetura.DTO.ProdutoDto;
 import com.arquitetura.dao.ProdutoDao;
 import com.arquitetura.error.BadValueException;
-import com.arquitetura.model.Categoria;
 import com.arquitetura.model.Produto;
 import com.arquitetura.service.CategoriaService;
 import com.arquitetura.service.ProdutoService;
@@ -22,7 +20,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Autowired
 	private ProdutoDao dao;
-	
+
 	@Autowired
 	private CategoriaService categoriaService;
 
@@ -43,71 +41,48 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	public ProdutoDto save(ProdutoDto produtoDto) {
-		
-		if(Objects.isNull(produtoDto)) {
+
+		if (Objects.isNull(produtoDto)) {
 			throw new BadValueException("Informe os dados do Produto");
 		}
 
 		Produto produto = new Produto();
 		produto.setNome(produtoDto.getNome());
 		produto.setPreco(produtoDto.getPreco());
-		if(!Objects.isNull(produtoDto.getCategorias()) && produtoDto.getCategorias().size() > 0){
-			List ids = produtoDto.getCategorias().stream().map(c -> c.getId()).collect(Collectors.toList());
-			produto.setCategorias(this.getCategorias(this.categoriaService.findByIdCategorias(ids)));
+		if (!Objects.isNull(produtoDto.getCategorias())
+				&& produtoDto.getCategorias().size() > 0) {
+			List ids = produtoDto.getCategorias().stream().map(c -> c.getId())
+					.collect(Collectors.toList());
+			produto.setCategorias(this.categoriaService
+					.getCategorias(this.categoriaService
+							.findByIdCategorias(ids)));
 		}
-		
-		if(Objects.isNull(this.dao.save(produto))) {
-			throw new BadValueException("Não foi possivel adicionar uma produto");
+
+		if (Objects.isNull(this.dao.save(produto))) {
+			throw new BadValueException(
+					"Não foi possivel adicionar uma produto");
 		}
-		
-		return this.convertModelToDto(produto);
+
+		return this.getProdutoDto(produto);
 	}
-	
-	private List<Categoria> getCategorias(List<CategoriaDto> categoriasDto){
-		List<Categoria> categorias = new ArrayList<Categoria>();
-		
-		categoriasDto.stream().forEach(categoriaDto -> {
-				Categoria categoria = new Categoria();
-				
-				categoria.setId(categoriaDto.getId());
-				categoria.setNome(categoriaDto.getNome());
-				
-				categorias.add(categoria);
-		});
-		
-		return categorias;
-	}
-	
-	private List<CategoriaDto> getCategoriasDto(List<Categoria> categorias){
-		List<CategoriaDto> categoriasDto = new ArrayList<CategoriaDto>();
-		
-		categorias.stream().forEach(categoria -> {
-			CategoriaDto categoriaDto = new CategoriaDto();
-			categoriaDto.setId(categoria.getId());
-			categoriaDto.setNome(categoria.getNome());
-			categoriasDto.add(categoriaDto);
-		});
-		
-		return categoriasDto;
-	}
-	
-	
-	private ProdutoDto convertModelToDto(Produto produto) {
+
+	private ProdutoDto getProdutoDto(Produto produto) {
 		ProdutoDto produtoDto = new ProdutoDto();
 		produtoDto.setId(produto.getId());
 		produtoDto.setNome(produto.getNome());
 		produtoDto.setPreco(produto.getPreco());
-		
-		produtoDto.setCategorias(this.getCategoriasDto(produto.getCategorias()));
+
+		produtoDto.setCategorias(this.categoriaService.getCategoriasDto(produto
+				.getCategorias()));
 		return produtoDto;
 	}
 
 	@Override
 	public List<Produto> findAll() {
-		
+
 		List<Produto> produtos = this.dao.findAll();
-		
-		if(Objects.isNull(produtos)) {
+
+		if (Objects.isNull(produtos)) {
 			throw new BadValueException("Não existe nenhum produto cadastrada");
 		}
 
@@ -116,48 +91,74 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	public List<ProdutoDto> saveListProduto(List<ProdutoDto> produtosDto) {
-		
-		if(Objects.isNull(produtosDto)) {
+
+		if (Objects.isNull(produtosDto)) {
 			throw new BadValueException("Informe os dados dod Produtos");
 		}
-		
+
 		List<Produto> produtos = new ArrayList<Produto>();
-		
-		produtosDto.stream().forEach(produtoDto -> {
-			Produto produto = new Produto();
-			produto.setNome(produtoDto.getNome());
-			produto.setPreco(produtoDto.getPreco());
-			
-			if(!Objects.isNull(produtoDto.getCategorias()) && produtoDto.getCategorias().size() > 0){
-				List ids = produtoDto.getCategorias().stream().map(c -> c.getId()).collect(Collectors.toList());
-				produto.setCategorias(this.getCategorias(this.categoriaService.findByIdCategorias(ids)));
-			}
-		
-			produtos.add(produto);
-		});
-		
-		if(Objects.isNull(this.dao.saveAll(produtos))) {
-			throw new BadValueException("Não foi possivel adicionar as produtos");
+
+		produtosDto.stream().forEach(
+				produtoDto -> {
+					Produto produto = new Produto();
+					produto.setNome(produtoDto.getNome());
+					produto.setPreco(produtoDto.getPreco());
+
+					if (!Objects.isNull(produtoDto.getCategorias())
+							&& produtoDto.getCategorias().size() > 0) {
+						List ids = produtoDto.getCategorias().stream()
+								.map(c -> c.getId())
+								.collect(Collectors.toList());
+						produto.setCategorias(this.categoriaService
+								.getCategorias(this.categoriaService
+										.findByIdCategorias(ids)));
+					}
+
+					produtos.add(produto);
+				});
+
+		if (Objects.isNull(this.dao.saveAll(produtos))) {
+			throw new BadValueException(
+					"Não foi possivel adicionar as produtos");
 		}
-		
-		
-		return this.convertListModelToDto(produtos);
+
+		return this.getProdutosDto(produtos);
 	}
-	
-	private List<ProdutoDto> convertListModelToDto(List<Produto> produtos) {
+
+	private List<ProdutoDto> getProdutosDto(List<Produto> produtos) {
 		List<ProdutoDto> produtosDto = new ArrayList<>();
-		
-		produtos.stream().forEach(produto -> {
-			ProdutoDto produtoDto = new ProdutoDto();
-			produtoDto.setId(produto.getId());
-			produtoDto.setNome(produto.getNome());
-			produtoDto.setPreco(produto.getPreco());
-			produtoDto.setCategorias(this.getCategoriasDto(produto.getCategorias()));
-			
-			produtosDto.add(produtoDto);
-		});
-		
+
+		produtos.stream().forEach(
+				produto -> {
+					ProdutoDto produtoDto = new ProdutoDto();
+					produtoDto.setId(produto.getId());
+					produtoDto.setNome(produto.getNome());
+					produtoDto.setPreco(produto.getPreco());
+					produtoDto.setCategorias(this.categoriaService
+							.getCategoriasDto(produto.getCategorias()));
+
+					produtosDto.add(produtoDto);
+				});
+
 		return produtosDto;
+	}
+
+	@Override
+	public ProdutoDto alterar(Long id, ProdutoDto produtoDto) {
+
+		if (Objects.isNull(id)) {
+			throw new BadValueException("Informe o produto para ser alterado");
+		}
+
+		Produto produto = this.findById(id);
+		produto.setNome(produtoDto.getNome());
+		produto.setPreco(produtoDto.getPreco());
+		produto.setCategorias(this.categoriaService.getCategorias(produtoDto
+				.getCategorias()));
+		
+		this.dao.saveAndFlush(produto);
+
+		return this.getProdutoDto(produto);
 	}
 
 }

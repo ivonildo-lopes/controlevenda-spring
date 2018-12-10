@@ -27,7 +27,6 @@ public class CategoriaResource implements Serializable {
 	@Autowired
 	private CategoriaService service;
 
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	@ApiOperation(value = "listar todas as categorias")
 	public Response findAll() {
@@ -35,9 +34,7 @@ public class CategoriaResource implements Serializable {
 		List<Categoria> categorias = service.findAll();
 
 		return new Response().setData(categorias);
-
 	}
-
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "listar id por categoria")
@@ -46,7 +43,6 @@ public class CategoriaResource implements Serializable {
 		Categoria categoria = service.findById(id);
 
 		return new Response().setData(categoria);
-
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -56,21 +52,16 @@ public class CategoriaResource implements Serializable {
 		CategoriaDto categoria = this.service.save(categoriaDto);
 
 		return new Response().setData(categoria).setInfos("Categoria Adiciona com sucesso");
-
 	}
 	
 	
-	@RequestMapping(value="/saveList",method = RequestMethod.POST)
+	@RequestMapping(value="/saveAll",method = RequestMethod.POST)
 	@ApiOperation(value = "Adicionar categoria")
 	public Response saveListCategoria(@RequestBody List<CategoriaDto> categoriasDto) {
 
 		List<CategoriaDto> categorias = this.service.saveListCategoria(categoriasDto);
 
 		return new Response().setData(categorias).setInfos("Categoria Adiciona com sucesso");
-
 	}
-	
-	
-	
 
 }

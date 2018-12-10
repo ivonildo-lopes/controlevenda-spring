@@ -1,5 +1,7 @@
 package com.arquitetura.resource;
 
+import io.swagger.annotations.ApiOperation;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,18 +17,14 @@ import com.arquitetura.DTO.Response;
 import com.arquitetura.model.Produto;
 import com.arquitetura.service.ProdutoService;
 
-import io.swagger.annotations.ApiOperation;
-
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutoResource implements Serializable {
 
-	
 	private static final long serialVersionUID = 9007056534492394991L;
 
 	@Autowired
 	private ProdutoService service;
-
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	@ApiOperation(value = "listar todas os produtos")
@@ -35,9 +33,7 @@ public class ProdutoResource implements Serializable {
 		List<Produto> produtos = service.findAll();
 
 		return new Response().setData(produtos);
-
 	}
-
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "listar produto por id")
@@ -46,7 +42,6 @@ public class ProdutoResource implements Serializable {
 		Produto produto = service.findById(id);
 
 		return new Response().setData(produto);
-
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -56,21 +51,23 @@ public class ProdutoResource implements Serializable {
 		ProdutoDto produto = this.service.save(produtoDto);
 
 		return new Response().setData(produto).setInfos("Produto Adicionado com sucesso");
-
 	}
 	
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	@ApiOperation(value = "alterar produto")
+	public Response alterar(@PathVariable Long id,@RequestBody ProdutoDto produtoDto) {
+
+		ProdutoDto produto = this.service.alterar(id,produtoDto);
+
+		return new Response().setData(produto).setInfos("Produto alterado com sucesso");
+	}
 	
-	@RequestMapping(value="/saveList",method = RequestMethod.POST)
+	@RequestMapping(value="/saveAll",method = RequestMethod.POST)
 	@ApiOperation(value = "Adicionar produto")
 	public Response saveListProduto(@RequestBody List<ProdutoDto> produtosDto) {
 
 		List<ProdutoDto> produtos = this.service.saveListProduto(produtosDto);
 
 		return new Response().setData(produtos).setInfos("Produtos Adicionados com sucesso");
-
 	}
-	
-	
-	
-
 }

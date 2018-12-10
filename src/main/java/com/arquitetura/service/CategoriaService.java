@@ -20,4 +20,8 @@ public interface CategoriaService {
 
 	List<CategoriaDto> findByIdCategorias(List ids);
 
+	List<CategoriaDto> getCategoriasDto(List<Categoria> categorias);
+
+	List<Categoria> getCategorias(List<CategoriaDto> findByIdCategorias);
+
 }

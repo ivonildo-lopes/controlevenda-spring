@@ -59,6 +59,8 @@ public class CategoriaServiceImpl implements CategoriaService {
 		
 		return categoriaDto;
 	}
+	
+	
 
 	@Override
 	public List<Categoria> findAll() {
@@ -88,17 +90,31 @@ public class CategoriaServiceImpl implements CategoriaService {
 		}
 		
 		
-		return this.convertListModelToDto(categorias);
+		return this.getCategoriasDto(categorias);
+	}
+		
+	public List<Categoria> getCategorias(List<CategoriaDto> categoriasDto){
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		
+		categoriasDto.stream().forEach(categoriaDto -> {
+				Categoria categoria = new Categoria();
+				
+				categoria.setId(categoriaDto.getId());
+				categoria.setNome(categoriaDto.getNome());
+				
+				categorias.add(categoria);
+		});
+		
+		return categorias;
 	}
 	
-	private List<CategoriaDto> convertListModelToDto(List<Categoria> categorias) {
-		List<CategoriaDto> categoriasDto = new ArrayList<>();
+	public List<CategoriaDto> getCategoriasDto(List<Categoria> categorias){
+		List<CategoriaDto> categoriasDto = new ArrayList<CategoriaDto>();
 		
 		categorias.stream().forEach(categoria -> {
 			CategoriaDto categoriaDto = new CategoriaDto();
 			categoriaDto.setId(categoria.getId());
 			categoriaDto.setNome(categoria.getNome());
-			
 			categoriasDto.add(categoriaDto);
 		});
 		

@@ -18,6 +18,8 @@ public interface ProdutoService {
 	
 	List<ProdutoDto> saveListProduto(List<ProdutoDto> produtoDto);
 
+	ProdutoDto alterar(Long id, ProdutoDto produtoDto);
+
 
 
 }
