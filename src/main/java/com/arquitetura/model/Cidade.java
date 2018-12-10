@@ -12,10 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Data;
 
 @Entity
 @Table(name = "cidade")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public @Data class Cidade implements Serializable {
 
 	private static final long serialVersionUID = 5426680024538963320L;
@@ -27,7 +33,7 @@ public @Data class Cidade implements Serializable {
 	@Column(length=250)
 	private String nome;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="id_estado")
 	private Estado estado;
 	

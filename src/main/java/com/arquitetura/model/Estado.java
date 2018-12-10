@@ -10,10 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Data;
 
 @Entity
 @Table(name = "estado")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public @Data class Estado implements Serializable {
 
 	private static final long serialVersionUID = 5958756653816230783L;
@@ -28,6 +35,7 @@ public @Data class Estado implements Serializable {
 	private String sigla;
 	
 	@OneToMany(mappedBy="estado")
+	@JsonIgnore
 	private List<Cidade> cidades;
 	
 	public Estado() {}
