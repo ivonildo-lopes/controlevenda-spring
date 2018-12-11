@@ -24,4 +24,6 @@ public interface CategoriaService {
 
 	List<Categoria> getCategorias(List<CategoriaDto> findByIdCategorias);
 
+	CategoriaDto alterar(Long id, CategoriaDto categoriaDto);
+
 }

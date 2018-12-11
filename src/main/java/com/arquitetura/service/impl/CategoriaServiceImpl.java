@@ -68,6 +68,23 @@ public class CategoriaServiceImpl implements CategoriaService {
 		return this.convertModelToDto(categoria);
 	}
 	
+	@Override
+	public CategoriaDto alterar(Long id, CategoriaDto categoriaDto) {
+		
+		if(Objects.isNull(id)) {
+			throw new BadValueException("Informe a categoria para ser alterada");
+		}
+		
+		Categoria categoria = this.findById(id);
+		categoria.setNome(categoriaDto.getNome());
+		
+		if(Objects.isNull(this.dao.saveAndFlush(categoria))) {
+			throw new BadValueException("Não foi possivel alterar a categoria");
+		}
+		
+		return this.convertModelToDto(categoria);
+	}
+	
 	
 	private CategoriaDto convertModelToDto(Categoria categoria) {
 		CategoriaDto categoriaDto = new CategoriaDto();
@@ -123,5 +140,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 		
 		return categoriasDto;
 	}
+
+
 
 }

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class Response<T> implements Serializable {
 	private List<String> errors;
 	private List<String> warns;
 	private List<String> infos;
+	private URI uri;
 
 	private Integer status;
 
@@ -92,5 +94,16 @@ public class Response<T> implements Serializable {
 		this.status = status.value();
 		return this;
 	}
+
+	public URI  getUri() {
+		return uri;
+	}
+
+	public Response<T>  setUri(URI uri) {
+		this.uri = uri;
+		return this;
+	}
+	
+	
 
 }

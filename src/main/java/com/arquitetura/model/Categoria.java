@@ -28,7 +28,7 @@ public @Data class Categoria implements Serializable {
 	@Column(length=250)
 	private String nome;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<Produto>();
 		
