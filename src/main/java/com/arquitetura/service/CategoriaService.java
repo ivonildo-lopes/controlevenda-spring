@@ -2,6 +2,7 @@ package com.arquitetura.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import com.arquitetura.DTO.CategoriaDto;
@@ -24,6 +25,10 @@ public interface CategoriaService {
 
 	List<Categoria> getCategorias(List<CategoriaDto> findByIdCategorias);
 
-	CategoriaDto alterar(Long id, CategoriaDto categoriaDto);
+	CategoriaDto update(Long id, CategoriaDto categoriaDto);
+
+	void delete(Long id);
+	
+	Page<Categoria> findPage(Integer page, Integer linePerPage, String orderBy, String direction);
 
 }

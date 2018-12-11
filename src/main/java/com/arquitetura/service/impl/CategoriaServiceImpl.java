@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.arquitetura.DTO.CategoriaDto;
@@ -69,7 +72,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 	}
 	
 	@Override
-	public CategoriaDto alterar(Long id, CategoriaDto categoriaDto) {
+	public CategoriaDto update(Long id, CategoriaDto categoriaDto) {
 		
 		if(Objects.isNull(id)) {
 			throw new BadValueException("Informe a categoria para ser alterada");
@@ -139,6 +142,26 @@ public class CategoriaServiceImpl implements CategoriaService {
 		});
 		
 		return categoriasDto;
+	}
+
+	@Override
+	public void delete(Long id) {
+		
+		Categoria categoria = this.findById(id);
+		
+		if(categoria.getProdutos().size() > 0) {
+			throw new BadValueException("Essa categoria não pode ser excluida porque esta sendo associada a alguns produtos");
+		}
+		
+		this.dao.delete(categoria);
+		
+	}
+
+	@Override
+	public Page<Categoria> findPage(Integer page, Integer linePerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linePerPage, Direction.valueOf(direction), orderBy);
+		
+		return dao.findAll(pageRequest);
 	}
 
 
