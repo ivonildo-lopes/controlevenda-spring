@@ -2,7 +2,9 @@ package com.arquitetura.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,6 +39,10 @@ public @Data class Produto implements Serializable {
 	@JsonIgnore
 	private List<Categoria> categorias = new ArrayList<Categoria>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemPedido> itens = new HashSet<>();
+	
 	public Produto() {}
 
 	public Produto(Long id, String nome, Double preco) {
@@ -44,6 +51,15 @@ public @Data class Produto implements Serializable {
 		this.preco = preco;
 	}
 	
-	
+
+	@JsonIgnore
+	public List<Pedido> getPedidos(){
+		List<Pedido> pedidos = new ArrayList<>();
+		itens.stream().forEach(item -> {
+			pedidos.add(item.getPedido());
+		});
+		
+		return pedidos;
+	}
 
 }

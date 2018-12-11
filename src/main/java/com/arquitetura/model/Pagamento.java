@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.arquitetura.model.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -27,6 +28,7 @@ public @Data abstract class Pagamento implements Serializable{
 	
 	private EstadoPagamento estadoPagamento;
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "id_pedido")
 	@MapsId
