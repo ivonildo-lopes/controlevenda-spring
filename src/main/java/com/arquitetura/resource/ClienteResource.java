@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arquitetura.DTO.ClienteDto;
+import com.arquitetura.DTO.ProdutoDto;
 import com.arquitetura.DTO.Response;
 import com.arquitetura.model.Cliente;
 import com.arquitetura.service.ClienteService;
@@ -52,6 +53,15 @@ public class ClienteResource implements Serializable {
 		ClienteDto cliente = this.service.save(clienteDto);
 
 		return new Response().setData(cliente).setInfos("Cliente Adiciona com sucesso");
+	}
+	
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	@ApiOperation(value = "alterar produto")
+	public Response alterar(@PathVariable Long id,@RequestBody ClienteDto clienteDto) {
+
+		ClienteDto dto = this.service.alterar(id,clienteDto);
+
+		return new Response().setData(dto).setInfos("Cliente alterado com sucesso");
 	}
 	
 

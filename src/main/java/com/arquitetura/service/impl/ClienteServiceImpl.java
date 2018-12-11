@@ -75,6 +75,26 @@ public class ClienteServiceImpl implements ClienteService {
 		return this.convertModelToDto(cliente);
 	}
 	
+	@Override
+	public ClienteDto alterar(Long id, ClienteDto clienteDto) {
+		
+		if (Objects.isNull(id)) {
+			throw new BadValueException("Informe o cliente para ser alterado");
+		}
+		
+		Cliente cliente = this.findById(id);
+		cliente.setNome(clienteDto.getNome());
+		cliente.setCpfOuCnpj(clienteDto.getCpfOuCnpj());
+		cliente.setEmail(clienteDto.getEmail());
+		cliente.setTipoCliente(clienteDto.getTipoCliente());
+		cliente.setTelefones(clienteDto.getTelefones());
+		cliente.setEnderecos(this.getEndereco(cliente, clienteDto.getEnderecos()));
+		
+		this.dao.saveAndFlush(cliente);
+		
+		return this.convertModelToDto(cliente);
+	}
+	
 	
 	private List<Endereco> getEndereco(Cliente cliente,List<EnderecoDto> enderecosDto){
 		List<Endereco> enderecos = new ArrayList<>();
@@ -121,6 +141,10 @@ public class ClienteServiceImpl implements ClienteService {
 	
 	private CidadeDto getCidadesDto(Cidade cidade){
 		
+		if(Objects.isNull(cidade)) {
+			new BadValueException("Por favor informe a cidade");
+		}
+		
 			CidadeDto cidadeDto = new CidadeDto();
 			cidadeDto.setId(cidade.getId());
 			cidadeDto.setNome(cidade.getNome());
@@ -131,6 +155,11 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 	
 	private Cidade getCidade(CidadeDto cidadeDto) {
+		
+		if(Objects.isNull(cidadeDto)) {
+			new BadValueException("Por favor informe a cidade");
+		}
+		
 		Cidade cidade = new Cidade();
 		cidade.setId(cidadeDto.getId());
 		cidade.setNome(cidadeDto.getNome());
@@ -155,6 +184,10 @@ public class ClienteServiceImpl implements ClienteService {
 	
 	private EstadoDto getEstadoDto(Estado estado) {
 		
+		if(Objects.isNull(estado)) {
+			new BadValueException("Por favor informe o estado");
+		}
+		
 		EstadoDto estadoDto = new EstadoDto();
 		estadoDto.setId(estado.getId());
 		estadoDto.setNome(estado.getNome());
@@ -164,6 +197,11 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 	
 	private Estado getEstado(EstadoDto estadoDto) {
+		
+		if(Objects.isNull(estadoDto)) {
+			new BadValueException("Por favor informe o estado");
+		}
+		
 		Estado estado = new Estado();
 		estado.setId(estadoDto.getId());
 		estado.setNome(estadoDto.getNome());
@@ -171,5 +209,7 @@ public class ClienteServiceImpl implements ClienteService {
 		
 		return estado;
 	}
+
+
 	
 }

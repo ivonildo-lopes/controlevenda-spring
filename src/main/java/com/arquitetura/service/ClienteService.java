@@ -15,6 +15,8 @@ public interface ClienteService {
 	ClienteDto save(ClienteDto clienteDto);
 
 	List<Cliente> findAll();
+	
+	ClienteDto alterar(Long id, ClienteDto clienteDto);
 
 
 
