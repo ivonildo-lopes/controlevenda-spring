@@ -38,6 +38,18 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 		return obj;
 	}
+	
+	@Override
+	public List<Produto> findAll() {
+
+		List<Produto> produtos = this.dao.findAll();
+
+		if (Objects.isNull(produtos)) {
+			throw new BadValueException("Não existe nenhum produto cadastrada");
+		}
+
+		return produtos;
+	}
 
 	@Override
 	public ProdutoDto save(ProdutoDto produtoDto) {
@@ -77,17 +89,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		return produtoDto;
 	}
 
-	@Override
-	public List<Produto> findAll() {
 
-		List<Produto> produtos = this.dao.findAll();
-
-		if (Objects.isNull(produtos)) {
-			throw new BadValueException("Não existe nenhum produto cadastrada");
-		}
-
-		return produtos;
-	}
 
 	@Override
 	public List<ProdutoDto> saveListProduto(List<ProdutoDto> produtosDto) {

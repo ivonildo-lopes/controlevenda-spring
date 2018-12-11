@@ -37,6 +37,23 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 		return obj;
 	}
+	
+	@Override
+	public List<Categoria> findAll() {
+		
+		List<Categoria> categorias = this.dao.findAll();
+		
+		if(Objects.isNull(categorias)) {
+			throw new BadValueException("Não existe nenhum categoria cadastrada");
+		}
+
+		return categorias;
+	}
+	
+	@Override
+	public List<CategoriaDto> findByIdCategorias(List ids) {
+		return this.repository.findByIdCategorias(ids);
+	}
 
 	@Override
 	public CategoriaDto save(CategoriaDto categoriaDto) {
@@ -60,20 +77,6 @@ public class CategoriaServiceImpl implements CategoriaService {
 		return categoriaDto;
 	}
 	
-	
-
-	@Override
-	public List<Categoria> findAll() {
-		
-		List<Categoria> categorias = this.dao.findAll();
-		
-		if(Objects.isNull(categorias)) {
-			throw new BadValueException("Não existe nenhum categoria cadastrada");
-		}
-
-		return categorias;
-	}
-
 	@Override
 	public List<CategoriaDto> saveListCategoria(List<CategoriaDto> categoriasDto) {
 		
@@ -119,11 +122,6 @@ public class CategoriaServiceImpl implements CategoriaService {
 		});
 		
 		return categoriasDto;
-	}
-
-	@Override
-	public List<CategoriaDto> findByIdCategorias(List ids) {
-		return this.repository.findByIdCategorias(ids);
 	}
 
 }
