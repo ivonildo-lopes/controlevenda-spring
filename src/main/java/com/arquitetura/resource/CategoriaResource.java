@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -74,7 +76,7 @@ public class CategoriaResource implements Serializable {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ApiOperation(value = "Adicionar categoria")
-	public Response save(@RequestBody CategoriaDto categoriaDto) {
+	public Response save(@Valid @RequestBody CategoriaDto categoriaDto) {
 
 		CategoriaDto categoria = this.service.save(categoriaDto);
 		
@@ -86,7 +88,7 @@ public class CategoriaResource implements Serializable {
 	
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
 	@ApiOperation(value = "alterar categoria")
-	public Response update(@PathVariable Long id,@RequestBody CategoriaDto categoriaDto) {
+	public Response update(@PathVariable Long id,@Valid @RequestBody CategoriaDto categoriaDto) {
 
 		CategoriaDto dto = this.service.update(id,categoriaDto);
 

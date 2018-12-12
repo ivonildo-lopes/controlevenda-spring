@@ -1,6 +1,7 @@
 package com.arquitetura.error;
 
 
+import org.assertj.core.util.ArrayWrapperList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 //import org.springframework.security.access.AccessDeniedException;
 //import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,6 +23,8 @@ import javax.persistence.OptimisticLockException;
 import javax.persistence.RollbackException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -112,6 +117,18 @@ public class GlobalControllerExceptionHandler {
 //        saveLog(ex);
 //        return error;
 //    }
+    
+    @ExceptionHandler(value = { MethodArgumentNotValidException.class })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ValidationError validacaoDtoError(MethodArgumentNotValidException ex) {
+        ValidationError err = new ValidationError(400, 4001,Arrays.asList("Erro de validação"));
+        
+        for(FieldError error : ex.getBindingResult().getFieldErrors()) {
+        	err.addErro(error.getField(), error.getDefaultMessage());
+        }
+        
+        return err;
+    }
 
     @ExceptionHandler(value = { Exception.class })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
