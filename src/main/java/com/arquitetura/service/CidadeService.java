@@ -9,7 +9,7 @@ import com.arquitetura.model.Cidade;
 
 @NoRepositoryBean
 public interface CidadeService {
-	
+
 	Cidade findById(Long id);
 
 	CidadeDto save(CidadeDto cidadeDto);
@@ -21,5 +21,4 @@ public interface CidadeService {
 	List<CidadeDto> getCidadesDto(List<Cidade> cidades);
 
 	List<Cidade> getCidades(List<CidadeDto> findByIdCidades);
-
 }

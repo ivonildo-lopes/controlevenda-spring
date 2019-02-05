@@ -94,7 +94,6 @@ public class CidadeServiceImpl implements CidadeService {
 		if(Objects.isNull(cidades)) {
 			throw new BadValueException("Não existe nenhum cidade cadastrada");
 		}
-
 		return cidades;
 	}
 
@@ -148,5 +147,4 @@ public class CidadeServiceImpl implements CidadeService {
 		
 		return cidadesDto;
 	}
-
 }

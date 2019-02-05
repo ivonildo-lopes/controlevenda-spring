@@ -16,6 +16,7 @@ import com.arquitetura.error.BadValueException;
 import com.arquitetura.model.Categoria;
 import com.arquitetura.repository.CategoriaRepository;
 import com.arquitetura.service.CategoriaService;
+import com.arquitetura.util.GeradorRelatorio;
 
 @Service(value = "categoriaService")
 public class CategoriaServiceImpl implements CategoriaService {
@@ -49,7 +50,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 		if(Objects.isNull(categorias)) {
 			throw new BadValueException("Não existe nenhum categoria cadastrada");
 		}
-
+		
 		return categorias;
 	}
 	
