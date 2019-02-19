@@ -22,7 +22,7 @@ public class GeradorRelatorio {
 //	public static byte[] gerarRelatorio(List lista, Map<String, Object> parametros, String nomeRelatorio, ServletContext context){
 	public static byte[] gerarRelatorio(List lista, String nomeRelatorio){	
 	try {
-			InputStream fonte = GeradorRelatorio.class.getResourceAsStream("/rel/teste.jrxml");
+			InputStream fonte = GeradorRelatorio.class.getResourceAsStream("/reports/teste.jrxml");
 			JasperReport report = JasperCompileManager.compileReport(fonte);
 			JasperPrint print = JasperFillManager.fillReport(report,null, new JRBeanCollectionDataSource(lista));
 			return JasperExportManager.exportReportToPdf(print);
