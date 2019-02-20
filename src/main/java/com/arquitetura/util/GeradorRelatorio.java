@@ -2,11 +2,14 @@ package com.arquitetura.util;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+
+import com.arquitetura.model.Cidade;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -22,7 +25,7 @@ public class GeradorRelatorio {
 //	public static byte[] gerarRelatorio(List lista, Map<String, Object> parametros, String nomeRelatorio, ServletContext context){
 	public static byte[] gerarRelatorio(List lista, String nomeRelatorio){	
 	try {
-			InputStream fonte = GeradorRelatorio.class.getResourceAsStream("/reports/teste.jrxml");
+			InputStream fonte = GeradorRelatorio.class.getResourceAsStream("/reports/cidades.jrxml");
 			JasperReport report = JasperCompileManager.compileReport(fonte);
 			JasperPrint print = JasperFillManager.fillReport(report,null, new JRBeanCollectionDataSource(lista));
 			return JasperExportManager.exportReportToPdf(print);
@@ -32,12 +35,27 @@ public class GeradorRelatorio {
 			return null;
 		}
 	}
+	
+	public static void main(String[] args) throws JRException {
+		
+		
+		Cidade c1 = new Cidade(1l, "teste", null);
+		Cidade c2 = new Cidade(2l, "teste2", null);
+		Cidade c3 = new Cidade(3l, "teste3", null);
+		
+		List<Cidade> lista = new ArrayList<Cidade>();
+		lista.add(c1);
+		lista.add(c2);
+		lista.add(c3);
+		
+		geraRelatorio(lista);
+	}
 
 	
-	public void geraRelatorio(List list) throws JRException {
+	public static void geraRelatorio(List list) throws JRException {
 
 		
-		InputStream fonte = GeradorRelatorio.class.getResourceAsStream("/rel/teste.jrxml");
+		InputStream fonte = GeradorRelatorio.class.getResourceAsStream("/reports/cidades.jrxml");
 		JasperReport report = JasperCompileManager.compileReport(fonte);
 		JasperPrint print = JasperFillManager.fillReport(report,null, new JRBeanCollectionDataSource(list));
 		JasperViewer.viewReport(print,false);

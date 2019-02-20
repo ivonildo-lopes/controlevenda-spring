@@ -50,17 +50,9 @@ public class CidadeResource implements Serializable {
 	public Response imprime(HttpServletResponse reponse) throws JRException, IOException {
 
 		List<Cidade> cidades = service.findAll();
-//		parametros = parametros == null ? parametros = new HashMap<>() : parametros;
-//		
-//		InputStream jasperStream = this.getClass().getResourceAsStream("/rel/teste.jasper");
-//		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
-//		
-//		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperStream, parametros,new JRBeanCollectionDataSource(cidades));
-//		reponse.setContentType("application/pdf");
-//		reponse.setHeader("Content-Disposition", "inline; filename=teste.pdf");
+
 		byte[] retorno = GeradorRelatorio.gerarRelatorio(cidades, "teste.pdf");
 
-//		byte[] retorno = JasperExportManager.exportReportToPdf(jasperPrint);
 		return new Response().setData(retorno);
 	}
 	
