@@ -2,31 +2,24 @@ package com.arquitetura.resource;
 
 import io.swagger.annotations.ApiOperation;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arquitetura.DTO.CidadeDto;
@@ -44,14 +37,20 @@ public class CidadeResource implements Serializable {
 
 	@Autowired
 	private CidadeService service;
-
+	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	@ApiOperation(value = "teste")
 	public Response imprime(HttpServletResponse reponse) throws JRException, IOException {
 
 		List<Cidade> cidades = service.findAll();
+		
+		Map<String, Object> parametros= new HashMap<String, Object>();	
+		String path = File.separator + "images" + File.separator;
+		parametros.put("logo", path + "logo.png");
+		parametros.put("teste", "ivonildo lopes rodrigues");
+		parametros.put("tese", "00");
 
-		byte[] retorno = GeradorRelatorio.gerarRelatorio(cidades, "teste.pdf");
+		byte[] retorno = GeradorRelatorio.gerarRelatorio(cidades, "cidades","teste.pdf",parametros);
 
 		return new Response().setData(retorno);
 	}

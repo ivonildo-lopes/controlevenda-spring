@@ -23,11 +23,16 @@ import net.sf.jasperreports.view.JasperViewer;
 public class GeradorRelatorio {
 	
 //	public static byte[] gerarRelatorio(List lista, Map<String, Object> parametros, String nomeRelatorio, ServletContext context){
-	public static byte[] gerarRelatorio(List lista, String nomeRelatorio){	
+	public static byte[] gerarRelatorio(List lista, String nomeResource, String nomeRelatorio,Map<String, Object> parametros){	
 	try {
-			InputStream fonte = GeradorRelatorio.class.getResourceAsStream("/reports/cidades.jrxml");
+//		 StringBuilder path = new StringBuilder(File.separator + "reports" + File.separator);
+//		 path.append(nomeResource);
+//		 path.append(".jrxml");
+//		 InputStream fonte = GeradorRelatorio.class.getResourceAsStream(path.toString());
+		 
+		    InputStream fonte = GeradorRelatorio.class.getResourceAsStream("/reports/" + nomeResource +".jrxml");
 			JasperReport report = JasperCompileManager.compileReport(fonte);
-			JasperPrint print = JasperFillManager.fillReport(report,null, new JRBeanCollectionDataSource(lista));
+			JasperPrint print = JasperFillManager.fillReport(report,parametros, new JRBeanCollectionDataSource(lista));
 			return JasperExportManager.exportReportToPdf(print);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -35,6 +40,19 @@ public class GeradorRelatorio {
 			return null;
 		}
 	}
+	
+	public static byte[] gerarRelatorio2(List lista, String nomeResource, String nomeRelatorio){	
+		try {
+				InputStream fonte = GeradorRelatorio.class.getResourceAsStream("/reports/" + nomeResource +".jrxml");
+				JasperReport report = JasperCompileManager.compileReport(fonte);
+				JasperPrint print = JasperFillManager.fillReport(report,null, new JRBeanCollectionDataSource(lista));
+				return JasperExportManager.exportReportToPdf(print);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return null;
+			}
+		}
 	
 	public static void main(String[] args) throws JRException {
 		
