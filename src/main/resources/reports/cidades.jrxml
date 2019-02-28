@@ -5,7 +5,6 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="logo" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="teste" class="java.lang.String"/>
-	<parameter name="tese" class="java.lang.String"/>
 	<field name="id" class="java.lang.Long"/>
 	<field name="nome" class="java.lang.String"/>
 	<background>
@@ -72,7 +71,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="100" height="20" uuid="0826570f-2544-4baf-9bb5-6c4a7e74ce59"/>
 				<textElement textAlignment="Center"/>
@@ -83,10 +82,17 @@
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="29c34648-af6a-4daf-8368-fc65c1784c25"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="17" splitType="Stretch"/>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="3b8bdde0-71aa-42c9-8b35-d1efe6a69fbd"/>
+			</line>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="21" splitType="Stretch">
