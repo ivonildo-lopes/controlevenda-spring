@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.arquitetura.service.UploadService;
+
 
 @Component
-public class UploadServiceImpl  {
+public class UploadServiceImpl implements UploadService  {
 	
 	@Value("${contato.disco.raiz}")
 	private String raiz;
@@ -19,7 +21,7 @@ public class UploadServiceImpl  {
 	@Value("${contato.disco.diretorio-arquivos}")
 	private String diretorioArquivos;
 	
-	public void salvarFoto(MultipartFile arquivo) {
+	public void enviarArquivo(MultipartFile arquivo) {
 		this.salvar(this.diretorioArquivos, arquivo);
 	}
 	
