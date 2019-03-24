@@ -15,7 +15,7 @@ public class RedirectResource {
 
     public static final String DEV = "dev";
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/teste", method = RequestMethod.GET)
     public String redirect() {
         return DEV.equals(profile)? "redirect:swagger-ui.html": "";
     }
