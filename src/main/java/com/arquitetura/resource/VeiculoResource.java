@@ -93,5 +93,14 @@ public class VeiculoResource implements Serializable {
 
 		return new Response().setData(entityDto).setInfos("Categoria alterado com sucesso");
 	}
+	
+	@RequestMapping(value="/params",method = RequestMethod.GET)
+	@ApiOperation(value = "alterar veiculo")
+	public Response findByParams(VeiculoDto dto) {
+
+		List<VeiculoDto> list = this.service.findByVeiculos(dto);
+
+		return new Response().setData(this.service.findByVeiculos(dto)).setInfos("Veiculo(s) encontrado(s)");
+	}
 
 }

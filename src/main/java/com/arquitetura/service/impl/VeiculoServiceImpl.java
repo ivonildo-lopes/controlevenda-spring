@@ -13,7 +13,7 @@ import com.arquitetura.DTO.VeiculoDto;
 import com.arquitetura.dao.VeiculoDao;
 import com.arquitetura.error.BadValueException;
 import com.arquitetura.model.Veiculo;
-import com.arquitetura.repository.CategoriaRepository;
+import com.arquitetura.repository.VeiculoRepository;
 import com.arquitetura.service.VeiculoService;
 
 @Service(value = "veiculoService")
@@ -23,7 +23,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 	private VeiculoDao dao;
 	
 	@Autowired
-	private CategoriaRepository repository;
+	private VeiculoRepository repository;
 
 	public Veiculo findById(Long id) {
 
@@ -60,7 +60,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 	
 	@Override
 	public List<VeiculoDto> findByVeiculos(VeiculoDto dto) {
-		return null;
+		return this.repository.findByVeiculos(dto);
 	}
 
 	@Override
@@ -68,16 +68,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 
 		Veiculo entity = new Veiculo();
 		this.convertDtoToModel(entity, dto);
-//		entity.setPlaca(dto.getPlaca());
-//		entity.setRenavam(dto.getRenavam());
-//		entity.setChassi(dto.getChassi());
-//		entity.setModelo(dto.getModelo());
-//		entity.setAnoModelo(dto.getAnoModelo());
-//		entity.setAnoFabricacao(dto.getAnoFabricacao());
-//		entity.setCor(dto.getCor());
-//		entity.setObservacao(dto.getObservacao());
-//		entity.setIsVendido(dto.getIsVendido());
-		
+
 		if(Objects.isNull(this.dao.save(entity))) {
 			throw new BadValueException("Não foi possivel adicionar uma categoria");
 		}
@@ -94,15 +85,6 @@ public class VeiculoServiceImpl implements VeiculoService {
 		
 		Veiculo entity = this.findById(id);
 		this.convertDtoToModel(entity, dto);
-//		entity.setPlaca(dto.getPlaca());
-//		entity.setRenavam(dto.getRenavam());
-//		entity.setChassi(dto.getChassi());
-//		entity.setModelo(dto.getModelo());
-//		entity.setAnoModelo(dto.getAnoModelo());
-//		entity.setAnoFabricacao(dto.getAnoFabricacao());
-//		entity.setCor(dto.getCor());
-//		entity.setObservacao(dto.getObservacao());
-//		entity.setIsVendido(dto.getIsVendido());
 		
 		if(Objects.isNull(this.dao.saveAndFlush(entity))) {
 			throw new BadValueException("Não foi possivel alterar a categoria");

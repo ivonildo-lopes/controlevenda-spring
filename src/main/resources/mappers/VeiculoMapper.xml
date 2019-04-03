@@ -1,0 +1,60 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VeiculoRepository">
+
+	<resultMap id="resultVeiculoDto" type="com.arquitetura.DTO.VeiculoDto">
+		<id property="id" column="id" />
+		<result property="placa" column="placa" />
+		<result property="renavam" column="renavam" />
+		<result property="chassi" column="chassi" />
+		
+		<result property="modelo" column="modelo" />
+		<result property="anoModelo" column="anoModelo" />
+		<result property="anoFabricacao" column="anoFabricacao" />
+		<result property="cor" column="cor" />
+		
+		<result property="observacao" column="observacao" />
+		<result property="isVendido" column="isVendido" />
+		
+	</resultMap>
+
+	<select id="findByVeiculos" resultMap="resultVeiculoDto">
+		SELECT id, placa, renavam, chassi, modelo, ano_modelo as anoModelo, ano_fabricacao as anoFabricacao, cor, observacao, is_vendido as isVendido FROM veiculo
+		where 1=1
+		  <if test="placa != null">
+		    AND placa like #{placa}
+		  </if>
+		  
+		  <if test="renavam != null">
+		    AND renavam like '%'#{renavam}'%'
+		  </if>
+		  
+		  <if test="chassi != null">
+		    AND chassi like #{chassi}
+		  </if>
+		  
+		  <if test="modelo != null">
+		    AND modelo like #{modelo}
+		  </if>
+		  
+		  <if test="anoModelo != null">
+		    AND ano_modelo like #{anoModelo}
+		  </if>
+		  
+		  <if test="anoFabricacao != null">
+		    AND ano_fabricacao like #{anoFabricacao}
+		  </if>
+		  
+		  <if test="isVendido != null">
+		    AND is_vendido = #{isVendido}
+		  </if>
+		  
+		  
+	</select>
+
+
+
+
+</mapper>
