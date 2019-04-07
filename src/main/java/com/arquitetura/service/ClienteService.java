@@ -18,6 +18,8 @@ public interface ClienteService {
 	
 	ClienteDto alterar(Long id, ClienteDto clienteDto);
 
+	List<ClienteDto> findByClientes(ClienteDto dto);
+
 
 
 }

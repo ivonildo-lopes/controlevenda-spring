@@ -1,11 +1,6 @@
 package com.arquitetura.DTO;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import com.arquitetura.model.enums.TipoCliente;
+import java.util.Date;
 
 import lombok.Data;
 
@@ -17,12 +12,16 @@ public @Data class ClienteDto {
 
 	private String email;
 
-	private String cpfOuCnpj;
+	private String cpf;
 
-	private TipoCliente tipoCliente;
+	private String rg;
 
-	private List<EnderecoDto> enderecos = new ArrayList<EnderecoDto>();
+	private String telefone;
 
-	private Set<String> telefones = new HashSet<>();
+	private String endereco;
+
+	private String cep;
+
+	private Date dataNascimento;
 
 }

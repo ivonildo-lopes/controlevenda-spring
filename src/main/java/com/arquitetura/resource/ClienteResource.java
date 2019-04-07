@@ -1,5 +1,7 @@
 package com.arquitetura.resource;
 
+import io.swagger.annotations.ApiOperation;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,15 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arquitetura.DTO.ClienteDto;
-import com.arquitetura.DTO.ProdutoDto;
 import com.arquitetura.DTO.Response;
 import com.arquitetura.model.Cliente;
 import com.arquitetura.service.ClienteService;
 
-import io.swagger.annotations.ApiOperation;
-
 @RestController
-@RequestMapping(value = "/clientes")
+@RequestMapping(value = "/cliente")
 public class ClienteResource implements Serializable {
 
 	
@@ -62,6 +61,15 @@ public class ClienteResource implements Serializable {
 		ClienteDto dto = this.service.alterar(id,clienteDto);
 
 		return new Response().setData(dto).setInfos("Cliente alterado com sucesso");
+	}
+	
+	@RequestMapping(value="/params",method = RequestMethod.GET)
+	@ApiOperation(value = "alterar cliente")
+	public Response findByParams(ClienteDto dto) {
+
+		List<ClienteDto> list = this.service.findByClientes(dto);
+
+		return new Response().setData(this.service.findByClientes(dto)).setInfos("Cliente(s) encontrado(s)");
 	}
 	
 

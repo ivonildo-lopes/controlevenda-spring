@@ -1,0 +1,54 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ClienteRepository">
+
+	<resultMap id="resultClienteDto" type="com.arquitetura.DTO.ClienteDto">
+		<id property="id" column="id" />
+		<result property="nome" column="nome" />
+		<result property="rg" column="rg" />
+		<result property="cpf" column="cpf" />
+		
+		<result property="email" column="email" />
+		<result property="telefone" column="telefone" />
+		<result property="endereco" column="endereco" />
+		<result property="cep" column="cep" />
+		
+		<result property="dataNascimento" column="dataNascimento" />
+			
+	</resultMap>
+
+	<select id="findByClientes" resultMap="resultClienteDto">
+		SELECT id, nome, rg,  cpf, email, telefone,  endereco, cep,data_Nascimento as dataNascimento FROM cliente
+		where 1=1
+		  <if test="nome != null">
+		    AND nome like #{nome}
+		  </if>
+		  
+		  <if test="cpf != null">
+		    AND cpf like #{cpf}
+		  </if>
+		  
+		  <if test="rg != null">
+		    AND rg like #{rg}
+		  </if>
+		  
+		  <if test="email != null">
+		    AND email like #{email}
+		  </if>
+		  
+		  <if test="telefone != null">
+		    AND telefone like #{telefone}
+		  </if>
+		  
+		  <if test="endereco != null">
+		    AND endereco like #{endereco}
+		  </if>
+		  
+	</select>
+
+
+
+
+</mapper>
