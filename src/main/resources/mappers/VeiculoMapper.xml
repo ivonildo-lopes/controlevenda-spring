@@ -53,6 +53,11 @@
 		  
 		  
 	</select>
+	
+	 <update id = "updateVeiculo" >
+      UPDATE Veiculo SET is_vendido = true 
+      WHERE id = #{id};
+   </update>
 
 
 

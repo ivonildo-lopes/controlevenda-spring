@@ -50,5 +50,11 @@ public class VeiculoRepository implements Serializable{
 		return this.sqlSession.selectList("VeiculoRepository.findByVeiculos",filter);
 	}
 	
+	public void atualizaVeiculoQuandoVendido(Long id) {
+		Map<String, Object> filter = new HashMap<>();
+		filter.put("id", id);
+		this.sqlSession.update("VeiculoRepository.updateVeiculo",filter);
+	}
+	
 	
 }
