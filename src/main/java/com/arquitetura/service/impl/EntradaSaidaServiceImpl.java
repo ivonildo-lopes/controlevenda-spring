@@ -35,6 +35,9 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 	private VeiculoRepository veiculoRepository;
 	
 	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
 	private EntradaSaidaDao dao;
 	
 	public ComboEntradaSaidaDto populaListas() {
@@ -95,11 +98,31 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 
 	@Override
 	public EntradaSaidaDto save(EntradaSaidaDto dto) {
+		
+		
+		Integer qtdCadastrado = this.dao.verificaSeJafoiDadoEntrada(dto.getVeiculo().getId());
+		
+		
+		if(qtdCadastrado == null) {
+			qtdCadastrado = 0;
+		}else if(qtdCadastrado % 2 != 0 && dto.getTipo().equals("1")){
+			throw new BadValueException("Veiculo ja foi dado Entrada");
+		}
+		
+		if(qtdCadastrado % 2 == 0 && dto.getTipo().equals("2")){
+			throw new BadValueException("Dê entrada no veiculo para poder dar a saida");
+		}
+		
+		
 		EntradaSaida entity = new EntradaSaida();
+
+		this.clienteDeCompraNaEntrada(dto);
 		this.convertDtoToModel(entity, dto);
 
-		this.veiculoRepository.atualizaVeiculoQuandoVendido(dto.getVeiculo().getId());
-		
+		//caso seja saida atualizar o campo vendido na tabela de veiculos
+		if(dto.getTipo().equals("2")){
+			this.veiculoRepository.atualizaVeiculoQuandoVendido(dto.getVeiculo().getId());
+		}
 		if(Objects.isNull(this.dao.save(entity))) {
 			throw new BadValueException("Não foi possivel realizar entrada saida");
 		}
@@ -178,6 +201,15 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 		dto.setCliente(clienteDto);
 		
 		return dto;
+	}
+	
+	private void clienteDeCompraNaEntrada(EntradaSaidaDto dto){
+		if(dto.getTipo().equals("1") && dto.getCliente() == null){
+			ClienteDto clienteDto = new ClienteDto();
+			clienteDto.setCpf("123.456.789-11");
+			ClienteDto clienteDtoRescult = this.clienteRepository.findByClientes(clienteDto).get(0);
+			dto.setCliente(clienteDtoRescult); 
+		}
 	}
 	
 	
