@@ -70,7 +70,7 @@ public class VeiculoResource implements Serializable {
 
 		this.service.delete(id);
 
-		return new Response().setInfos("categoria deletada").setStatus(HttpStatus.OK);
+		return new Response().setInfos("veiculo deletade com sucesso").setStatus(HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -82,7 +82,7 @@ public class VeiculoResource implements Serializable {
 		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("/categorias/{id}").buildAndExpand(entityDto.getId()).toUri();
 
-		return new Response().setData(entityDto).setInfos("Categoria Adiciona com sucesso").setStatus(HttpStatus.CREATED).setUri(uri);
+		return new Response().setData(entityDto).setInfos("Veiculo Cadastrado com sucesso").setStatus(HttpStatus.CREATED).setUri(uri);
 	}
 	
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
@@ -91,7 +91,7 @@ public class VeiculoResource implements Serializable {
 
 		VeiculoDto entityDto = this.service.update(id,dto);
 
-		return new Response().setData(entityDto).setInfos("Categoria alterado com sucesso");
+		return new Response().setData(entityDto).setInfos("Veiculo alterado com sucesso");
 	}
 	
 	@RequestMapping(value="/params",method = RequestMethod.GET)

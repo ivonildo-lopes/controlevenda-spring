@@ -51,7 +51,7 @@ public class ClienteResource implements Serializable {
 
 		ClienteDto cliente = this.service.save(clienteDto);
 
-		return new Response().setData(cliente).setInfos("Cliente Adiciona com sucesso");
+		return new Response().setData(cliente).setInfos("Cliente cadastrado com sucesso");
 	}
 	
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT)

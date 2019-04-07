@@ -46,10 +46,15 @@ public class EntradaSaidaResource implements Serializable {
 	@RequestMapping(method = RequestMethod.POST)
 	@ApiOperation(value = "Adicionar cliente")
 	public Response save(@RequestBody EntradaSaidaDto dto) {
+		
+		String mensagem = "";
 
 		EntradaSaidaDto entradaSaida = this.service.save(dto);
+		
+		if(entradaSaida.getTipo().equals("1")){ mensagem += "Entrada de Veiculo realizada com sucesso";}
+		if(entradaSaida.getTipo().equals("2")){ mensagem += "Saida de Veiculo realizada com sucesso";}
 
-		return new Response().setData(entradaSaida).setInfos("Salvo com sucesso");
+		return new Response().setData(entradaSaida).setInfos(mensagem);
 	}
 //	
 //	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
