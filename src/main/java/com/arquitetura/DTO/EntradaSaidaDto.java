@@ -11,5 +11,11 @@ public @Data class EntradaSaidaDto {
 	private ClienteDto cliente;
 	private VeiculoDto veiculo;
 	private Date data;
+	
+	//para consulta
+	private Long IdVeiculo;
+	private Long IdCliente;
+	private Date dataInicio;
+	private Date dataFim;
 
 }

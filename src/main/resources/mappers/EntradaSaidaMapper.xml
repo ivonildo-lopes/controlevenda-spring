@@ -1,0 +1,46 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="EntradaSaidaRepository">
+
+	<resultMap id="resultEntradaSaidaDto" type="com.arquitetura.DTO.EntradaSaidaConsultaDto">
+		<result property="id" column="id" />
+		<result property="tipo" column="tipo" />
+		<result property="veiculo" column="veiculo" />
+		<result property="valor" column="valor" />
+		
+		<result property="cliente" column="cliente" />
+		<result property="data" column="data" />
+		
+	</resultMap>
+
+	<select id="findByEntradaSaida" resultMap="resultEntradaSaidaDto">
+		SELECT e.id, e.tipo, v.placa || ' ' || v.modelo || ' ' || v.cor as veiculo, e.valor, e.data, c.nome  as cliente 
+		FROM ENTRADA_SAIDA e 
+		 join veiculo v on e.id_veiculo = v.id
+		 join cliente c on e.id_cliente = c.id
+		where 1=1 
+		
+		  <if test="tipo != null">
+		    AND e.tipo like #{tipo}
+		  </if>
+		  
+		  <if test="idCliente != null">
+		    AND c.id = #{idCliente}
+		  </if>
+		  
+		  <if test="idVeiculo != null">
+		    AND v.id = #{idVeiculo}
+		  </if>
+		  
+		
+		  
+		  order by v.id
+		  
+	</select>
+
+
+
+
+</mapper>

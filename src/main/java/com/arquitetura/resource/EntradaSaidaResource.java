@@ -3,6 +3,7 @@ package com.arquitetura.resource;
 import io.swagger.annotations.ApiOperation;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arquitetura.DTO.ComboEntradaSaidaDto;
+import com.arquitetura.DTO.EntradaSaidaConsultaDto;
 import com.arquitetura.DTO.EntradaSaidaDto;
 import com.arquitetura.DTO.Response;
 import com.arquitetura.service.EntradaSaidaService;
@@ -26,10 +28,19 @@ public class EntradaSaidaResource implements Serializable {
 	private EntradaSaidaService service;
 
 	@RequestMapping(value = "/listas", method = RequestMethod.GET)
-	@ApiOperation(value = "listar todas os clientes e os veiculos")
+	@ApiOperation(value = "listar todas os clientes e os veiculos da loja")
 	public Response findListas() {
 
 		ComboEntradaSaidaDto combos = service.populaListas();
+
+		return new Response().setData(combos);
+	}
+	
+	@RequestMapping(value = "/listas/consulta", method = RequestMethod.GET)
+	@ApiOperation(value = "listar todas os clientes e os veiculos")
+	public Response findListasConsulta() {
+
+		ComboEntradaSaidaDto combos = service.populaListasConsulta();
 
 		return new Response().setData(combos);
 	}
@@ -66,14 +77,14 @@ public class EntradaSaidaResource implements Serializable {
 //		return new Response().setData(dto).setInfos("Cliente alterado com sucesso");
 //	}
 //	
-//	@RequestMapping(value="/params",method = RequestMethod.GET)
-//	@ApiOperation(value = "alterar cliente")
-//	public Response findByParams(ClienteDto dto) {
-//
-//		List<ClienteDto> list = this.service.findByClientes(dto);
-//
-//		return new Response().setData(this.service.findByClientes(dto)).setInfos("Cliente(s) encontrado(s)");
-//	}
+	@RequestMapping(value="/params",method = RequestMethod.GET)
+	@ApiOperation(value = "consultar entradas por params")
+	public Response findByParams(EntradaSaidaDto dto) {
+
+		List<EntradaSaidaConsultaDto> list = this.service.findByEntradaSaida(dto);
+
+		return new Response().setData(list).setInfos("Movimentações encontrada(s)");
+	}
 //	
 
 }

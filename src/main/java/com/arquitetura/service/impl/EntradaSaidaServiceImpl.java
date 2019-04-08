@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.arquitetura.DTO.ClienteDto;
 import com.arquitetura.DTO.ComboEntradaSaidaDto;
+import com.arquitetura.DTO.EntradaSaidaConsultaDto;
 import com.arquitetura.DTO.EntradaSaidaDto;
 import com.arquitetura.DTO.VeiculoDto;
 import com.arquitetura.dao.ClienteDao;
@@ -19,6 +20,7 @@ import com.arquitetura.model.Cliente;
 import com.arquitetura.model.EntradaSaida;
 import com.arquitetura.model.Veiculo;
 import com.arquitetura.repository.ClienteRepository;
+import com.arquitetura.repository.EntradaSaidaRepository;
 import com.arquitetura.repository.VeiculoRepository;
 import com.arquitetura.service.EntradaSaidaService;
 
@@ -38,6 +40,9 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 	private ClienteRepository clienteRepository;
 	
 	@Autowired
+	private EntradaSaidaRepository repository;
+	
+	@Autowired
 	private EntradaSaidaDao dao;
 	
 	public ComboEntradaSaidaDto populaListas() {
@@ -52,6 +57,19 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 		
 		return combos;
 	}
+	
+	public ComboEntradaSaidaDto populaListasConsulta() {
+	
+			
+			List<Veiculo> listVeiculos = this.veiculoDao.findAll();
+			List<Cliente> listClientes = this.clienteDao.findAll();
+		
+			ComboEntradaSaidaDto combos = new ComboEntradaSaidaDto();
+			combos.setVeiculos(this.veiculoToVeiculoDto(listVeiculos));
+			combos.setClientes(this.clienteToClienteDto(listClientes));
+			
+			return combos;
+		}
 	
 	private List<VeiculoDto> veiculoToVeiculoDto(List<Veiculo> veiculos) {
 		
@@ -210,6 +228,11 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 			ClienteDto clienteDtoRescult = this.clienteRepository.findByClientes(clienteDto).get(0);
 			dto.setCliente(clienteDtoRescult); 
 		}
+	}
+
+	@Override
+	public List<EntradaSaidaConsultaDto> findByEntradaSaida(EntradaSaidaDto dto) {
+		return this.repository.findByEntradaSaida(dto);
 	}
 	
 	
