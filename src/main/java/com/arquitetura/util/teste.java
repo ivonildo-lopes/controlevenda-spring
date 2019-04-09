@@ -15,17 +15,17 @@ public class teste implements NativeKeyListener {
 
 	static StringBuilder text = new StringBuilder("");
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		try {
-			GlobalScreen.registerNativeHook();
-		} catch (NativeHookException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		GlobalScreen.addNativeKeyListener(new teste());
-	}
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		try {
+//			GlobalScreen.registerNativeHook();
+//		} catch (NativeHookException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		GlobalScreen.addNativeKeyListener(new teste());
+//	}
 
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {

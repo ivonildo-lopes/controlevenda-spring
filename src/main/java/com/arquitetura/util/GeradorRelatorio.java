@@ -54,20 +54,20 @@ public class GeradorRelatorio {
 			}
 		}
 	
-	public static void main(String[] args) throws JRException {
-		
-		
-		Cidade c1 = new Cidade(1l, "teste", null);
-		Cidade c2 = new Cidade(2l, "teste2", null);
-		Cidade c3 = new Cidade(3l, "teste3", null);
-		
-		List<Cidade> lista = new ArrayList<Cidade>();
-		lista.add(c1);
-		lista.add(c2);
-		lista.add(c3);
-		
-		geraRelatorio(lista);
-	}
+//	public static void main(String[] args) throws JRException {
+//		
+//		
+//		Cidade c1 = new Cidade(1l, "teste", null);
+//		Cidade c2 = new Cidade(2l, "teste2", null);
+//		Cidade c3 = new Cidade(3l, "teste3", null);
+//		
+//		List<Cidade> lista = new ArrayList<Cidade>();
+//		lista.add(c1);
+//		lista.add(c2);
+//		lista.add(c3);
+//		
+//		geraRelatorio(lista);
+//	}
 
 	
 	public static void geraRelatorio(List list) throws JRException {

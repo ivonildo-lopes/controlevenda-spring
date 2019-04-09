@@ -82,4 +82,9 @@ no application.properties:
 mybatis.mapperLocations=classpath*:**/mappers/*.xml
 mybatis.configuration.map-underscore-to-camel-case=true
 mybatis.configuration.default-fetch-size=100
+
+----------------------------------------------------------------------------------
+#GERANDO O JAR
+----------------------------------------------------------------------------------
+mvn package && java -jar target/controlevenda-spring.jar
 		
