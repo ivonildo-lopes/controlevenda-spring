@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="OrcamentoRepository">
+
+	<resultMap id="resultOrcamentoDto" type="com.arquitetura.DTO.OrcamentoDto">
+		<result property="id" column="id" />
+		<result property="descricao" column="descricao" />
+		<result property="veiculoDto" column="veiculo" />
+		<result property="valor" column="valor" />
+		<result property="data" column="data" />
+		
+	</resultMap>
+
+	<select id="findByOrcamento" resultMap="resultOrcamentoDto">
+		SELECT o.id, o.descricao, v.placa || ' ' || v.modelo || ' ' || v.cor as veiculo, o.valor, o.data 
+		FROM orcamento o 
+		 join veiculo v on o.id_veiculo = v.id
+		where 1=1 
+		  
+		  <if test="idVeiculo != null">
+		    AND v.id = #{idVeiculo}
+		  </if>
+		  
+		  order by v.id
+		  
+	</select>
+
+</mapper>
