@@ -58,6 +58,11 @@
       UPDATE Veiculo SET is_vendido = true 
       WHERE id = #{id};
    </update>
+   
+	<select id="findByVeiculosLoja" resultMap="resultVeiculoDto">
+		SELECT id, placa, renavam, chassi, modelo, ano_modelo as anoModelo, ano_fabricacao as anoFabricacao, cor, observacao, is_vendido as isVendido FROM veiculo
+		where 1=1
+	</select>
 
 
 

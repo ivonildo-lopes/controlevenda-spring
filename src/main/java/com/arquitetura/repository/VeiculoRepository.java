@@ -56,5 +56,9 @@ public class VeiculoRepository implements Serializable{
 		this.sqlSession.update("VeiculoRepository.updateVeiculo",filter);
 	}
 	
+	public List<VeiculoDto> findByVeiculosLoja() {
+		return this.sqlSession.selectList("VeiculoRepository.findByVeiculosLoja");
+	}
+	
 	
 }
