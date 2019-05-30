@@ -1,8 +1,11 @@
 package com.arquitetura.service;
 
+import java.util.List;
+
 import org.springframework.data.repository.NoRepositoryBean;
 
 import com.arquitetura.DTO.PromissoriaDto;
+import com.arquitetura.DTO.PromissoriaConsultaDto;
 
 @NoRepositoryBean
 public interface PromissoriaService {
@@ -12,7 +15,7 @@ public interface PromissoriaService {
 	
 	void save(PromissoriaDto dto);
 	
-//	List<EntradaSaidaConsultaDto> findByEntradaSaida(EntradaSaidaDto dto);
+	List<PromissoriaDto> findByPromissoria(PromissoriaConsultaDto dto);
 
 
 

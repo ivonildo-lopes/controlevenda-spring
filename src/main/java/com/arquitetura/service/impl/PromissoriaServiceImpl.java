@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.arquitetura.DTO.ClienteDto;
 import com.arquitetura.DTO.EntradaSaidaDto;
+import com.arquitetura.DTO.PromissoriaConsultaDto;
 import com.arquitetura.DTO.PromissoriaDto;
 import com.arquitetura.DTO.VeiculoDto;
 import com.arquitetura.dao.ClienteDao;
@@ -20,6 +21,7 @@ import com.arquitetura.model.Promissoria;
 import com.arquitetura.model.Veiculo;
 import com.arquitetura.repository.ClienteRepository;
 import com.arquitetura.repository.EntradaSaidaRepository;
+import com.arquitetura.repository.PromissoriaRepository;
 import com.arquitetura.repository.VeiculoRepository;
 import com.arquitetura.service.PromissoriaService;
 
@@ -36,7 +38,7 @@ public class PromissoriaServiceImpl implements PromissoriaService {
 	private ClienteRepository clienteRepository;
 	
 	@Autowired
-	private EntradaSaidaRepository repository;
+	private PromissoriaRepository repository;
 	
 //	public ComboEntradaSaidaDto populaListas() {
 //
@@ -204,10 +206,10 @@ public class PromissoriaServiceImpl implements PromissoriaService {
 	}
 	
 
-//	@Override
-//	public List<EntradaSaidaConsultaDto> findByEntradaSaida(EntradaSaidaDto dto) {
-//		return this.repository.findByEntradaSaida(dto);
-//	}
+	@Override
+	public List<PromissoriaDto> findByPromissoria(PromissoriaConsultaDto dto) {
+		return this.repository.findByPromissoria(dto);
+	}
 	
 	
 

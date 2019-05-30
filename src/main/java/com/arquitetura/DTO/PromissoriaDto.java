@@ -11,4 +11,12 @@ public @Data class PromissoriaDto {
 	private Date data;
 	private Integer qtdParcela;
 	
+	
+	private Long idCliente;
+	private String nomeCliente;
+	
+	private Long idPromissoria;
+	private String descricao;
+	private Boolean isPago;
+	
 }

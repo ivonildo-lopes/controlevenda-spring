@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PromissoriaRepository">
+
+	<resultMap id="resultPromissoriaDto" type="com.arquitetura.DTO.PromissoriaDto">
+		<result property="idCliente" column="idCliente" />
+		<result property="nomeCliente" column="nomeCliente" />
+		<result property="idPromissoria" column="idPromissoria" />
+		<result property="valor" column="valor" />
+		<result property="data" column="data" />
+		<result property="descricao" column="descricao" />
+		<result property="isPago" column="isPago" />
+	</resultMap>
+
+	<select id="findByPromissoria" resultMap="resultPromissoriaDto">
+		   SELECT c.id as idCliente, c.nome as nomeCliente, 
+		   		  p.id as idPromissoria, p.valor, p.data, 
+		   		  p.descricao, p.is_pago as isPago 
+			FROM PROMISSORIA p inner join cliente c on p.id_cliente = c.id
+			where 1=1
+		  
+		  <if test="idCliente != null">
+		    AND c.id = #{idCliente}
+		  </if>
+		  
+		  order by c.id
+		  
+	</select>
+
+</mapper>

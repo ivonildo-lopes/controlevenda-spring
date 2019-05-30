@@ -1,6 +1,7 @@
 package com.arquitetura.resource;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.arquitetura.DTO.EntradaSaidaDto;
+import com.arquitetura.DTO.PromissoriaConsultaDto;
 import com.arquitetura.DTO.PromissoriaDto;
 import com.arquitetura.DTO.Response;
 import com.arquitetura.service.PromissoriaService;
@@ -70,12 +71,12 @@ public class PromissoriaResource implements Serializable {
 //	}
 //	
 	@RequestMapping(value="/params",method = RequestMethod.GET)
-	@ApiOperation(value = "consultar entradas por params")
-	public Response findByParams(EntradaSaidaDto dto) {
+	@ApiOperation(value = "consultar promissoria por params")
+	public Response findByParams(PromissoriaConsultaDto dto) {
 
-//		List<EntradaSaidaConsultaDto> list = this.service.findByEntradaSaida(dto);
+		List<PromissoriaDto> list = this.service.findByPromissoria(dto);
 
-		return new Response().setData(null).setInfos("Movimentações encontrada(s)");
+		return new Response().setData(list).setInfos("Promissoria(s) encontrada(s)");
 	}
 //	
 
