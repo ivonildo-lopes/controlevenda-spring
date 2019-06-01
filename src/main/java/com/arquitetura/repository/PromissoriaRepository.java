@@ -32,9 +32,10 @@ public class PromissoriaRepository implements Serializable{
 		return this.sqlSession.selectList("PromissoriaRepository.findByPromissoria",filter);
 	}
 	
-	public static void main(String[] args) {
-		
-		
+	public void atualizaPromissoriaPaga(Long id) {
+		Map<String, Object> filter = new HashMap<>();
+		filter.put("id", id);
+		this.sqlSession.update("PromissoriaRepository.updatePromissoria",filter);
 	}
 	
 	

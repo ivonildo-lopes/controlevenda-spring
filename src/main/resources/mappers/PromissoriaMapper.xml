@@ -28,5 +28,10 @@
 		  order by c.id
 		  
 	</select>
+	
+	<update id = "updatePromissoria" >
+      UPDATE Promissoria SET is_pago = true 
+      WHERE id = #{id};
+   </update>
 
 </mapper>

@@ -17,6 +17,7 @@ public interface PromissoriaService {
 	
 	List<PromissoriaDto> findByPromissoria(PromissoriaConsultaDto dto);
 
+	void atualizaPromissoriaPaga(Long id);
 
 
 }

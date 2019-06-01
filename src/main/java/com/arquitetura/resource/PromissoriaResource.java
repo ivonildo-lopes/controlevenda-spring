@@ -2,8 +2,10 @@ package com.arquitetura.resource;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.arquitetura.DTO.PromissoriaConsultaDto;
 import com.arquitetura.DTO.PromissoriaDto;
 import com.arquitetura.DTO.Response;
+import com.arquitetura.error.BadValueException;
 import com.arquitetura.service.PromissoriaService;
 
 import io.swagger.annotations.ApiOperation;
@@ -60,16 +63,20 @@ public class PromissoriaResource implements Serializable {
 
 		return new Response().setData(null).setInfos(mensagem);
 	}
-//	
-//	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
-//	@ApiOperation(value = "alterar produto")
-//	public Response alterar(@PathVariable Long id,@RequestBody ClienteDto clienteDto) {
-//
-//		ClienteDto dto = this.service.alterar(id,clienteDto);
-//
-//		return new Response().setData(dto).setInfos("Cliente alterado com sucesso");
-//	}
-//	
+	
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	@ApiOperation(value = "alterar produto")
+	public Response quitarPromissoria(@PathVariable Long id) {
+
+		if(Objects.isNull(id)) {
+			throw new BadValueException("Por favor informe a promissoria");
+		}
+		
+		this.service.atualizaPromissoriaPaga(id);
+		
+		return new Response().setData(null).setInfos("Promissoria paga com sucesso");
+	}
+	
 	@RequestMapping(value="/params",method = RequestMethod.GET)
 	@ApiOperation(value = "consultar promissoria por params")
 	public Response findByParams(PromissoriaConsultaDto dto) {

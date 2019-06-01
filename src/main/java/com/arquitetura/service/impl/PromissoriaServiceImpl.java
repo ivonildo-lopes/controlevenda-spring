@@ -15,6 +15,7 @@ import com.arquitetura.DTO.VeiculoDto;
 import com.arquitetura.dao.ClienteDao;
 import com.arquitetura.dao.PromissoriaDao;
 import com.arquitetura.dao.VeiculoDao;
+import com.arquitetura.error.BadValueException;
 import com.arquitetura.model.Cliente;
 import com.arquitetura.model.EntradaSaida;
 import com.arquitetura.model.Promissoria;
@@ -209,6 +210,15 @@ public class PromissoriaServiceImpl implements PromissoriaService {
 	@Override
 	public List<PromissoriaDto> findByPromissoria(PromissoriaConsultaDto dto) {
 		return this.repository.findByPromissoria(dto);
+	}
+	
+	@Override
+	public void atualizaPromissoriaPaga(Long id) {
+		try {
+			this.repository.atualizaPromissoriaPaga(id);
+		} catch (Exception e) {
+			throw new BadValueException("Não foi possivel dar baixa na Promissoria");
+		}
 	}
 	
 	
