@@ -30,6 +30,7 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 	@Autowired
 	private ClienteDao clienteDao;
 	
+	
 	@Autowired
 	private VeiculoDao veiculoDao;
 	
@@ -186,6 +187,7 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 	
 	private EntradaSaidaDto convertModelToDto(EntradaSaida entity) {
 		
+		
 		EntradaSaidaDto dto = new EntradaSaidaDto();
 		
 		dto.setData(entity.getData());
@@ -224,9 +226,9 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 	private void clienteDeCompraNaEntrada(EntradaSaidaDto dto){
 		if(dto.getTipo().equals("1") && dto.getCliente() == null){
 			ClienteDto clienteDto = new ClienteDto();
-			clienteDto.setCpf("123.456.789-11");
+			clienteDto.setCpf("000.000.000-00");
 			ClienteDto clienteDtoRescult = this.clienteRepository.findByClientes(clienteDto).get(0);
-			dto.setCliente(clienteDtoRescult); 
+			dto.setCliente(clienteDtoRescult);
 		}
 	}
 

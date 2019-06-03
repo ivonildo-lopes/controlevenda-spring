@@ -25,6 +25,11 @@
 		    AND c.id = #{idCliente}
 		  </if>
 		  
+		  <if test="dataInicio != null and dataFim != null">
+		 	 AND  p.data  BETWEEN trunc(#{dataInicio}) AND trunc(#{dataFim}) 
+          </if>
+		  
+		  
 		  order by c.id
 		  
 	</select>
