@@ -49,11 +49,12 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 	public ComboEntradaSaidaDto populaListas() {
 
 		
-		List<Veiculo> listVeiculos = this.veiculoDao.todosVeiculosNaLoja();
+//		List<Veiculo> listVeiculos = this.veiculoDao.todosVeiculosNaLoja();
 		List<Cliente> listClientes = this.clienteDao.findAll();
 	
 		ComboEntradaSaidaDto combos = new ComboEntradaSaidaDto();
-		combos.setVeiculos(this.veiculoToVeiculoDto(listVeiculos));
+//		combos.setVeiculos(this.veiculoToVeiculoDto(listVeiculos));
+		combos.setVeiculos(this.veiculoRepository.findByVeiculosLoja());
 		combos.setClientes(this.clienteToClienteDto(listClientes));
 		
 		return combos;

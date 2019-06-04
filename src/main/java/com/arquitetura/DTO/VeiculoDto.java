@@ -1,6 +1,7 @@
 package com.arquitetura.DTO;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import lombok.Data;
 
@@ -19,4 +20,22 @@ public class VeiculoDto implements Serializable {
 	private String cor;
 	private String observacao;
 	private Boolean isVendido;
+	
+	
+	
+	private Double valorEntrada;
+	private Double valorGasto;
+	
+	
+	public Double getValorTotalVeiculo() {
+		return this.getValorEntrada()  + this.getValorGasto();
+	}
+	
+	public Double getValorEntrada() {
+		return Objects.isNull(this.valorEntrada) ? 0 : valorEntrada;
+	}
+	
+	public Double getValorGasto() {
+		return Objects.isNull(this.valorGasto) ? 0 : this.valorGasto;
+	}
 }
