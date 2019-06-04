@@ -70,6 +70,22 @@ public class OrcamentoResource implements Serializable {
 
 		return new Response().setData(orcamento).setInfos(mensagem);
 	}
+	
+	@RequestMapping(value="/all", method = RequestMethod.POST)
+	@ApiOperation(value = "Adicionar orcamentos")
+	public Response saveAll(@RequestBody List<OrcamentoDto> dto) {
+		
+		String mensagem = "";
+
+		try {
+			this.service.saveAll(dto);
+			mensagem += "Orcamento salvo com sucesso";
+			
+		} catch (Exception e) {
+		}
+		
+		return new Response().setData(null).setInfos(mensagem);
+	}
 //	
 //	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
 //	@ApiOperation(value = "alterar produto")

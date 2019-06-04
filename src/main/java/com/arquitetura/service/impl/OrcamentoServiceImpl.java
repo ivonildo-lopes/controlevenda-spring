@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.arquitetura.DTO.CategoriaDto;
 import com.arquitetura.DTO.ComboEntradaSaidaDto;
 import com.arquitetura.DTO.OrcamentoConsultaDto;
 import com.arquitetura.DTO.OrcamentoDto;
@@ -14,6 +15,7 @@ import com.arquitetura.DTO.VeiculoDto;
 import com.arquitetura.dao.OrcametoDao;
 import com.arquitetura.dao.VeiculoDao;
 import com.arquitetura.error.BadValueException;
+import com.arquitetura.model.Categoria;
 import com.arquitetura.model.Orcamento;
 import com.arquitetura.model.Veiculo;
 import com.arquitetura.repository.OrcamentoRepository;
@@ -97,6 +99,27 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		}
 		
 		return this.convertModelToDto(entity);
+		
+	}
+	
+	@Override
+	public void saveAll(List<OrcamentoDto> orcamentos) {
+		
+		List<Orcamento> orcamento = new ArrayList<Orcamento>();
+		
+		orcamentos.stream().forEach(orcamentoDto -> {
+			Orcamento orc = new Orcamento();
+//			orc.setData(orcamentoDto.getData());
+//			orc.setDescricao(orcamentoDto.getDescricao());
+//			orc.setValor(orcamentoDto.getValor());
+			this.convertDtoToModel(orc, orcamentoDto);
+			orcamento.add(orc);
+		});
+		
+		if(Objects.isNull(this.dao.saveAll(orcamento))) {
+			throw new BadValueException("Não foi possivel adicionar os orcamentos");
+		}
+		
 		
 	}
 	

@@ -16,6 +16,7 @@ public interface OrcamentoService {
 	
 	OrcamentoDto save(OrcamentoDto dto);
 	
+	void saveAll(List<OrcamentoDto> orcamentos);
 	List<OrcamentoDto> findByOrcamento(OrcamentoConsultaDto dto);
 
 
