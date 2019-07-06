@@ -69,7 +69,8 @@
 			left join orcamento o on o.id_veiculo = v.id
 			left join entrada_saida es on es.id_veiculo = v.id
 		where 1=1 and is_vendido = false
-		group by v.id
+		group by v.id, v.placa, v.renavam, v.chassi, v.modelo, v.ano_modelo, v.ano_fabricacao,
+		 	   v.cor, v.observacao, v.is_vendido, es.valor
 	</select>
 
 
