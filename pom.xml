@@ -81,9 +81,12 @@
 			<version>v3-rev130-1.25.0</version>
 		</dependency>
 
-
-
-
+		<!-- https://mvnrepository.com/artifact/com.sendgrid/sendgrid-java -->
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>4.4.1</version>
+		</dependency>
 
 		<!-- Banco de dados h2 -->
 		<dependency>
