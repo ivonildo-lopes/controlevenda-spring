@@ -2,6 +2,7 @@ package com.arquitetura.service.impl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,6 +41,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 
 		return obj;
+	}
+	
+	@Override
+	public Usuario findByUser(String user) {
+		return this.dao.findByUser(user).orElse(null);
 	}
 	
 	@Override
@@ -121,5 +127,5 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public List<UsuarioDto> findByUsuarios(UsuarioDto dto) {
 		return null; //this.repository.findByUsuarios(dto);
 	}
-	
+
 }

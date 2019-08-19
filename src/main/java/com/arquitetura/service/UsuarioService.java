@@ -11,6 +11,8 @@ import com.arquitetura.model.Usuario;
 public interface UsuarioService {
 	
 	Usuario findById(Long id);
+	
+	Usuario findByUser(String user);
 
 	UsuarioDto save(UsuarioDto usuarioDto);
 

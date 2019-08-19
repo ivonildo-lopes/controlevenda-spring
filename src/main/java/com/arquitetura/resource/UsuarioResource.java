@@ -43,6 +43,15 @@ public class UsuarioResource implements Serializable {
 
 		return new Response().setData(usuario);
 	}
+	
+	@RequestMapping(value = "/user/{user}", method = RequestMethod.GET)
+	@ApiOperation(value = "listar usario por login")
+	public Response findByUser(@PathVariable String user) {
+
+		Usuario usuario = service.findByUser(user);
+
+		return new Response().setData(usuario);
+	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ApiOperation(value = "Adicionar usuario")
