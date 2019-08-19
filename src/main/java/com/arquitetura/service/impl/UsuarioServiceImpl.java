@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.arquitetura.DTO.UsuarioDto;
 import com.arquitetura.dao.UsuarioDao;
+import com.arquitetura.error.AuthorizationException;
 import com.arquitetura.error.BadValueException;
 import com.arquitetura.model.Usuario;
 import com.arquitetura.model.enums.Perfil;
+import com.arquitetura.security.UserSpringSecurity;
 //import com.arquitetura.repository.UsuarioRepository;
 import com.arquitetura.service.UsuarioService;
 
@@ -29,6 +31,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public Usuario findById(Long id) {
+		
+		UserSpringSecurity userss = UsuarioLogadoService.authenticaded();
+		
+		if(Objects.isNull(userss) || userss.nonHasRole(Perfil.ADMIN) && !id.equals(userss.getId())) {
+			 throw new AuthorizationException("Acesso Negado, caso queira acesso solicite");
+		}
 
 		if (Objects.isNull(id)) {
 			throw new BadValueException("O ID da usuario precisa ser informado");

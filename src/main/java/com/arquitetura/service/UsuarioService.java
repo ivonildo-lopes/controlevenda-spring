@@ -22,6 +22,4 @@ public interface UsuarioService {
 
 	List<UsuarioDto> findByUsuarios(UsuarioDto dto);
 
-
-
 }

@@ -133,6 +133,16 @@ public class GlobalControllerExceptionHandler {
         saveLog(ex);
         return error;
     }
+    
+    @ExceptionHandler(value = { AuthorizationException.class })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiErrorResponse authorizationException(Throwable ex) {
+        ApiErrorResponse error = new ApiErrorResponse(HttpStatus.FORBIDDEN.value(), 5002, "acesso negada.");
+        saveLog(ex);
+        return error;
+    }
+    
+    
     public void saveLog(Throwable ex){
         logService.saveLog(ex);
         LOGGER.error(ex.getMessage());
