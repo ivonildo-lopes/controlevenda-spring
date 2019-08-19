@@ -1,7 +1,5 @@
 package com.arquitetura.resource;
 
-import io.swagger.annotations.ApiOperation;
-
 import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
@@ -11,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +23,8 @@ import com.arquitetura.DTO.VeiculoDto;
 import com.arquitetura.model.Veiculo;
 import com.arquitetura.service.VeiculoService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/veiculo")
 public class VeiculoResource implements Serializable {
@@ -34,6 +35,7 @@ public class VeiculoResource implements Serializable {
 	@Autowired
 	private VeiculoService service;
 
+	@PreAuthorize("hasAnyRole('ADMIN','FUNCIONARIO')")
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	@ApiOperation(value = "listar todod os veiculos")
 	public Response findAll() {
