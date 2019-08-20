@@ -46,7 +46,7 @@ public class EmailServiceImpl  implements EmailService{
 		this.sendEmail(msg);
 	}
 	
-	private SimpleMailMessage prepareSimpleMailMessageFromNewPassword(String usuario, String newPassword) {
+	protected SimpleMailMessage prepareSimpleMailMessageFromNewPassword(String usuario, String newPassword) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setTo(usuario);
 		msg.setFrom(from);
