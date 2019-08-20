@@ -41,11 +41,29 @@ public class EmailServiceImpl  implements EmailService{
 	}
 	
 	@Override
+	public void sendConfimationEmailNewPassword(String usuario, String newPassword) {
+		SimpleMailMessage msg = this.prepareSimpleMailMessageFromNewPassword(usuario,newPassword);
+		this.sendEmail(msg);
+	}
+	
+	private SimpleMailMessage prepareSimpleMailMessageFromNewPassword(String usuario, String newPassword) {
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(usuario);
+		msg.setFrom(from);
+		msg.setSubject("Senha do email" + usuario + " foi alterada");
+		msg.setSentDate(new Date(System.currentTimeMillis()));
+		msg.setText("Sua nova senha é: " + newPassword);
+		return msg;
+	}
+
+	@Override
 	public void sendEmail(SimpleMailMessage msg) {
 		LOG.info("Enviando email");
 		mailSender.send(msg);
 		LOG.info("Email Enviado com sucesso");
 		
 	}
+
+	
 
 }

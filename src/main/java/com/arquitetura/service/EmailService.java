@@ -9,6 +9,9 @@ import com.arquitetura.model.Usuario;
 public interface EmailService {
 	
 	void sendConfirmationEmailNewUser(Usuario usuario);
+	
+	void sendConfimationEmailNewPassword(String usuario, String newPassword);
+	
 	void sendEmail(SimpleMailMessage msg);
 
 }

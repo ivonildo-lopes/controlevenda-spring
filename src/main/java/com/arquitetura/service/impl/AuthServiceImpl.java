@@ -11,6 +11,7 @@ import com.arquitetura.dao.UsuarioDao;
 import com.arquitetura.error.BadValueException;
 import com.arquitetura.model.Usuario;
 import com.arquitetura.service.AuthService;
+import com.arquitetura.service.EmailService;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -20,6 +21,9 @@ public class AuthServiceImpl implements AuthService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	private Random random = new Random();
 
@@ -37,6 +41,7 @@ public class AuthServiceImpl implements AuthService {
 		
 		usuarioDao.save(usuario);
 		
+		this.emailService.sendConfimationEmailNewPassword(usuario.getUser(), password);
 	}
 
 	private String newPassword() {
