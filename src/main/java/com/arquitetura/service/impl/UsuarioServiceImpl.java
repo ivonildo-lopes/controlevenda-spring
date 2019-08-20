@@ -15,6 +15,7 @@ import com.arquitetura.error.BadValueException;
 import com.arquitetura.model.Usuario;
 import com.arquitetura.model.enums.Perfil;
 import com.arquitetura.security.UserSpringSecurity;
+import com.arquitetura.service.EmailService;
 //import com.arquitetura.repository.UsuarioRepository;
 import com.arquitetura.service.UsuarioService;
 
@@ -23,6 +24,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
 	private UsuarioDao dao;
+	
+	@Autowired
+	private EmailService emailService;
 	
 //	@Autowired
 //	private UsuarioRepository repository;
@@ -87,6 +91,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if(Objects.isNull(this.dao.save(usuario))) {
 			throw new BadValueException("Não foi possivel adicionar um usuario");
 		}
+		
+		this.emailService.sendConfirmationEmailNewUser(usuario);
 		
 		return this.convertModelToDto(usuario);
 	}

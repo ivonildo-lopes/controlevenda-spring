@@ -1,6 +1,8 @@
 package com.arquitetura.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,4 +54,21 @@ public class Usuario implements Serializable {
 	public void addPerfils(List<Perfil> perfis) {
 		this.perfis.addAll(perfis.stream().map(p -> p.getId()).collect(Collectors.toSet()));
 	}
+
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("\nParabéns \n");
+		builder.append(user);
+		builder.append("\nVocê foi cadastrado com sucesso no sistema\n");
+		builder.append("Data do cadastro:");
+		builder.append(sdf.format(new Date(System.currentTimeMillis())));
+		builder.append("\nvocê possui os seguintes perfis:");
+		builder.append(getPerfis());
+		return builder.toString();
+	}
+
+	
+	
 }
